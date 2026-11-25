@@ -342,7 +342,8 @@ def parse_ent(path):
         add('code', c.get('path') if isinstance(c, dict) else c)
     for key in ('questionText', 'messages'):
         for f in j.get(key, []):
-            add(key, f)
+            # CSPro 8.1 writes these as {"type": ..., "path": ...}; 8.0 as plain strings
+            add(key, f.get('path') if isinstance(f, dict) else f)
     return refs, None
 
 # ---------------------------------------------------------------- cross-file consistency
